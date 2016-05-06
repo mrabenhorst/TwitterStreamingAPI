@@ -161,7 +161,7 @@
             NSLog(@"Error: %@", error);
             // Report error to user
             UIAlertController *authenticationErrorAlertController = [UIAlertController alertControllerWithTitle:@"Authentication Error"
-                                                                                                        message:[error description]
+                                                                                                        message:[error localizedDescription]
                                                                                                  preferredStyle:UIAlertControllerStyleAlert];
             
             [authenticationErrorAlertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
