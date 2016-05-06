@@ -163,6 +163,11 @@
             UIAlertController *authenticationErrorAlertController = [UIAlertController alertControllerWithTitle:@"Authentication Error"
                                                                                                         message:[error description]
                                                                                                  preferredStyle:UIAlertControllerStyleAlert];
+            
+            [authenticationErrorAlertController addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                [authenticationErrorAlertController dismissViewControllerAnimated:YES completion:nil];
+            }]];
+            
             [self presentViewController:authenticationErrorAlertController animated:YES completion:nil];
         }];
     } else {
