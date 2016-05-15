@@ -26,12 +26,12 @@
     
     // Add GestureRecognizer to button view to recieve tap
     UIGestureRecognizer *toggleButtonRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(toggleStream:)];
-    [_buttonTile setGestureRecognizers:@[toggleButtonRecognizer]];
-    [_buttonTile setUserInteractionEnabled:TRUE];
+    [self.buttonTile setGestureRecognizers:@[toggleButtonRecognizer]];
+    [self.buttonTile setUserInteractionEnabled:TRUE];
     
     // Setup Twitter Stream Processor model core
-    _tsp = [[MRTwitterStreamProcessor alloc] init];
-    [_tsp setDelegate:self];
+    self.tsp = [[MRTwitterStreamProcessor alloc] init];
+    [self.tsp setDelegate:self];
     
     // Create twitter oAuth credentials
     // **********************************************************************
@@ -39,118 +39,118 @@
     // You will need to enter your own credentials before this will work!
     //
     // **********************************************************************
-    _twitterAPI = [STTwitterAPI twitterAPIWithOAuthConsumerKey:@""
-                                                consumerSecret:@""
-                                                    oauthToken:@""
-                                              oauthTokenSecret:@""];
+    self.twitterAPI = [STTwitterAPI twitterAPIWithOAuthConsumerKey:@""
+                                                    consumerSecret:@""
+                                                        oauthToken:@""
+                                                  oauthTokenSecret:@""];
     
 }
 
 - (void)initUI {
     // Initialize all UI views
-    _titleTile = [[MRTitleTileUIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 53)];
-    _tweetRateTile = [[MRTweetRateTileUIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_titleTile.frame), self.view.frame.size.width, 66)];
-    _hashtagStatisticsTile = [[MRStatisticsTileUIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_tweetRateTile.frame), self.view.frame.size.width, 116)];
-    _emojiStatisticsTile = [[MRStatisticsTileUIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_hashtagStatisticsTile.frame), self.view.frame.size.width, 116)];
-    _urlStatisticsTile = [[MRStatisticsTileUIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_emojiStatisticsTile.frame), self.view.frame.size.width, 116)];
-    _imageStatisticsTile = [[MRSimpleStatisticsTileUIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_urlStatisticsTile.frame), self.view.frame.size.width, 56)];
-    _buttonTile = [[MRButtonTileUIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(_imageStatisticsTile.frame), self.view.frame.size.width, 56)];
+    self.titleTile = [[MRTitleTileUIView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, 53)];
+    self.tweetRateTile = [[MRTweetRateTileUIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.titleTile.frame), self.view.frame.size.width, 66)];
+    self.hashtagStatisticsTile = [[MRStatisticsTileUIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.tweetRateTile.frame), self.view.frame.size.width, 116)];
+    self.emojiStatisticsTile = [[MRStatisticsTileUIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.hashtagStatisticsTile.frame), self.view.frame.size.width, 116)];
+    self.urlStatisticsTile = [[MRStatisticsTileUIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.emojiStatisticsTile.frame), self.view.frame.size.width, 116)];
+    self.imageStatisticsTile = [[MRSimpleStatisticsTileUIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.urlStatisticsTile.frame), self.view.frame.size.width, 56)];
+    self.buttonTile = [[MRButtonTileUIView alloc] initWithFrame:CGRectMake(0, CGRectGetMaxY(self.imageStatisticsTile.frame), self.view.frame.size.width, 56)];
     
     // Use scrollview for container view for older, shorter devices
-    _scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, self.view.frame.size.height-20)];
-    [_scrollView setContentSize:CGSizeMake(_scrollView.frame.size.width, CGRectGetMaxY(_buttonTile.frame))];
-    [self.view addSubview:_scrollView];
+    self.scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 20, self.view.frame.size.width, self.view.frame.size.height-20)];
+    [self.scrollView setContentSize:CGSizeMake(self.scrollView.frame.size.width, CGRectGetMaxY(self.buttonTile.frame))];
+    [self.view addSubview:self.scrollView];
     
     // Add views to viewcontroller's view
-    [_scrollView addSubview:_titleTile];
-    [_scrollView addSubview:_tweetRateTile];
-    [_scrollView addSubview:_hashtagStatisticsTile];
-    [_scrollView addSubview:_emojiStatisticsTile];
-    [_scrollView addSubview:_urlStatisticsTile];
-    [_scrollView addSubview:_imageStatisticsTile];
-    [_scrollView addSubview:_buttonTile];
+    [self.scrollView addSubview:self.titleTile];
+    [self.scrollView addSubview:self.tweetRateTile];
+    [self.scrollView addSubview:self.hashtagStatisticsTile];
+    [self.scrollView addSubview:self.emojiStatisticsTile];
+    [self.scrollView addSubview:self.urlStatisticsTile];
+    [self.scrollView addSubview:self.imageStatisticsTile];
+    [self.scrollView addSubview:self.buttonTile];
     
     // Colors
     [self.view setBackgroundColor:[UIColor colorWithRed:228.0/255.0 green:228.0/255.0 blue:228.0/255.0 alpha:1.0]];
-    [_titleTile setBackgroundColor:[UIColor clearColor]];
-    [_tweetRateTile setBackgroundColor:[UIColor clearColor]];
-    [_hashtagStatisticsTile setBackgroundColor:[UIColor clearColor]];
-    [_emojiStatisticsTile setBackgroundColor:[UIColor clearColor]];
-    [_urlStatisticsTile setBackgroundColor:[UIColor clearColor]];
-    [_imageStatisticsTile setBackgroundColor:[UIColor clearColor]];
-    [_buttonTile setBackgroundColor:[UIColor clearColor]];
+    [self.titleTile setBackgroundColor:[UIColor clearColor]];
+    [self.tweetRateTile setBackgroundColor:[UIColor clearColor]];
+    [self.hashtagStatisticsTile setBackgroundColor:[UIColor clearColor]];
+    [self.emojiStatisticsTile setBackgroundColor:[UIColor clearColor]];
+    [self.urlStatisticsTile setBackgroundColor:[UIColor clearColor]];
+    [self.imageStatisticsTile setBackgroundColor:[UIColor clearColor]];
+    [self.buttonTile setBackgroundColor:[UIColor clearColor]];
     
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"grey_wash_wall_light.png"]]];
 }
 
 - (void)resetUI {
     // Preset titles
-    [_titleTile setTitle:@"Twitter Stream Statistics"];
+    [self.titleTile setTitle:@"Twitter Stream Statistics"];
     
-    [_tweetRateTile setTitle:@"---"];
+    [self.tweetRateTile setTitle:@"---"];
     
-    [_tweetRateTile setSubtitleLeft:@"---"];
-    [_tweetRateTile setSubtitleCenter:@"---"];
-    [_tweetRateTile setSubtitleRight:@"---"];
-    [_tweetRateTile setNeedsDisplay];
+    [self.tweetRateTile setSubtitleLeft:@"---"];
+    [self.tweetRateTile setSubtitleCenter:@"---"];
+    [self.tweetRateTile setSubtitleRight:@"---"];
+    [self.tweetRateTile setNeedsDisplay];
     
-    [_emojiStatisticsTile setTitle:@"Emoji"];
-    [_emojiStatisticsTile setSubtitle:@"(---)"];
-    [_emojiStatisticsTile setRank1Title:@" ---"];
-    [_emojiStatisticsTile setRank1Subtitle:@"(---)"];
-    [_emojiStatisticsTile setRank2Title:@" ---"];
-    [_emojiStatisticsTile setRank2Subtitle:@"(---)"];
-    [_emojiStatisticsTile setRank3Title:@" ---"];
-    [_emojiStatisticsTile setRank3Subtitle:@"(---)"];
-    [_emojiStatisticsTile setNeedsDisplay];
+    [self.emojiStatisticsTile setTitle:@"Emoji"];
+    [self.emojiStatisticsTile setSubtitle:@"(---)"];
+    [self.emojiStatisticsTile setRank1Title:@" ---"];
+    [self.emojiStatisticsTile setRank1Subtitle:@"(---)"];
+    [self.emojiStatisticsTile setRank2Title:@" ---"];
+    [self.emojiStatisticsTile setRank2Subtitle:@"(---)"];
+    [self.emojiStatisticsTile setRank3Title:@" ---"];
+    [self.emojiStatisticsTile setRank3Subtitle:@"(---)"];
+    [self.emojiStatisticsTile setNeedsDisplay];
     
-    [_hashtagStatisticsTile setTitle:@"Hashtags"];
-    [_hashtagStatisticsTile setSubtitle:@"(---)"];
-    [_hashtagStatisticsTile setRank1Title:@" ---"];
-    [_hashtagStatisticsTile setRank1Subtitle:@"(---)"];
-    [_hashtagStatisticsTile setRank2Title:@" ---"];
-    [_hashtagStatisticsTile setRank2Subtitle:@"(---)"];
-    [_hashtagStatisticsTile setRank3Title:@" ---"];
-    [_hashtagStatisticsTile setRank3Subtitle:@"(---)"];
-    [_hashtagStatisticsTile setNeedsDisplay];
+    [self.hashtagStatisticsTile setTitle:@"Hashtags"];
+    [self.hashtagStatisticsTile setSubtitle:@"(---)"];
+    [self.hashtagStatisticsTile setRank1Title:@" ---"];
+    [self.hashtagStatisticsTile setRank1Subtitle:@"(---)"];
+    [self.hashtagStatisticsTile setRank2Title:@" ---"];
+    [self.hashtagStatisticsTile setRank2Subtitle:@"(---)"];
+    [self.hashtagStatisticsTile setRank3Title:@" ---"];
+    [self.hashtagStatisticsTile setRank3Subtitle:@"(---)"];
+    [self.hashtagStatisticsTile setNeedsDisplay];
     
-    [_urlStatisticsTile setTitle:@"URLs"];
-    [_urlStatisticsTile setSubtitle:@"(---)"];
-    [_urlStatisticsTile setRank1Title:@" ---"];
-    [_urlStatisticsTile setRank1Subtitle:@"(---)"];
-    [_urlStatisticsTile setRank2Title:@" ---"];
-    [_urlStatisticsTile setRank2Subtitle:@"(---)"];
-    [_urlStatisticsTile setRank3Title:@" ---"];
-    [_urlStatisticsTile setRank3Subtitle:@"(---)"];
-    [_urlStatisticsTile setNeedsDisplay];
+    [self.urlStatisticsTile setTitle:@"URLs"];
+    [self.urlStatisticsTile setSubtitle:@"(---)"];
+    [self.urlStatisticsTile setRank1Title:@" ---"];
+    [self.urlStatisticsTile setRank1Subtitle:@"(---)"];
+    [self.urlStatisticsTile setRank2Title:@" ---"];
+    [self.urlStatisticsTile setRank2Subtitle:@"(---)"];
+    [self.urlStatisticsTile setRank3Title:@" ---"];
+    [self.urlStatisticsTile setRank3Subtitle:@"(---)"];
+    [self.urlStatisticsTile setNeedsDisplay];
     
-    [_imageStatisticsTile setTitle:@"Image/Photo"];
-    [_imageStatisticsTile setSubtitle:@"(---)"];
-    [_imageStatisticsTile setNeedsDisplay];
+    [self.imageStatisticsTile setTitle:@"Image/Photo"];
+    [self.imageStatisticsTile setSubtitle:@"(---)"];
+    [self.imageStatisticsTile setNeedsDisplay];
     
-    [_buttonTile setColor:[UIColor colorWithRed: 0.376 green: 0.828 blue: 0.291 alpha: 1]];
-    [_buttonTile setTitle:@"Start Monitoring"];
-    [_buttonTile setNeedsDisplay];
+    [self.buttonTile setColor:[UIColor colorWithRed: 0.376 green: 0.828 blue: 0.291 alpha: 1]];
+    [self.buttonTile setTitle:@"Start Monitoring"];
+    [self.buttonTile setNeedsDisplay];
 }
 
 - (void)toggleStream:(UIGestureRecognizer *)gestureRecognizer {
-    if( !_request ) {
+    if( !self.request ) {
         // Validate credentials on every attempt in case user no longer authenticated to use resource
-        [_twitterAPI verifyCredentialsWithUserSuccessBlock:^(NSString *username, NSString *userID) {
+        [self.twitterAPI verifyCredentialsWithUserSuccessBlock:^(NSString *username, NSString *userID) {
             
             // Time monitoring for statistics
-            _streamStart = [NSDate date];
+            self.streamStart = [NSDate date];
             
             // Set button color/title
-            [_buttonTile setTitle:@"Stop Monitoring"];
-            [_buttonTile setColor:[UIColor redColor]];
-            [_buttonTile setNeedsDisplay];
+            [self.buttonTile setTitle:@"Stop Monitoring"];
+            [self.buttonTile setColor:[UIColor redColor]];
+            [self.buttonTile setNeedsDisplay];
             
             // If authenticated, then open request for sample statuses
-            _request = [_twitterAPI getStatusesSampleStallWarnings:[NSNumber numberWithInt:0] progressBlock:^( NSDictionary *json, STTwitterStreamJSONType type ) {
+            self.request = [self.twitterAPI getStatusesSampleStallWarnings:[NSNumber numberWithInt:0] progressBlock:^( NSDictionary *json, STTwitterStreamJSONType type ) {
                 
                 // Process the tweet
-                [_tsp processTweet:json];
+                [self.tsp processTweet:json];
                 
             } errorBlock:^( NSError *error ) {
                 // This occurs on a cancellation, so don't bother user
@@ -172,16 +172,16 @@
         }];
     } else {
         // Close connection
-        [_request cancel];
-        _request = nil;
+        [self.request cancel];
+        self.request = nil;
         
         // Reset the processor
-        [_tsp reset];
+        [self.tsp reset];
         
         // Set button color/title
-        [_buttonTile setTitle:@"Start Monitoring"];
-        [_buttonTile setColor:[UIColor colorWithRed: 0.376 green: 0.828 blue: 0.291 alpha: 1]];
-        [_buttonTile setNeedsDisplay];
+        [self.buttonTile setTitle:@"Start Monitoring"];
+        [self.buttonTile setColor:[UIColor colorWithRed: 0.376 green: 0.828 blue: 0.291 alpha: 1]];
+        [self.buttonTile setNeedsDisplay];
     }
 }
 
@@ -208,75 +208,75 @@
     
     // Calculate current duration
     NSDate *streamFinish = [NSDate date];
-    NSTimeInterval streamDuration = [streamFinish timeIntervalSinceDate:_streamStart];
+    NSTimeInterval streamDuration = [streamFinish timeIntervalSinceDate:self.streamStart];
     
     // Tweet Rate Indicator
-    [_tweetRateTile setTitle:[NSString stringWithFormat:@"%d", [twitterStreamProcessor tweets]]];
+    [self.tweetRateTile setTitle:[NSString stringWithFormat:@"%d", [twitterStreamProcessor tweets]]];
     
     float tweetsPerSecond = ((float)[twitterStreamProcessor tweets] / (float)streamDuration);
-    [_tweetRateTile setSubtitleLeft:[NSString stringWithFormat:@"%@/sec", [NSNumberFormatter localizedStringFromNumber:@((int)tweetsPerSecond) numberStyle:NSNumberFormatterDecimalStyle]]];
-    [_tweetRateTile setSubtitleCenter:[NSString stringWithFormat:@"%@/min", [NSNumberFormatter localizedStringFromNumber:@((int)tweetsPerSecond*60) numberStyle:NSNumberFormatterDecimalStyle]]];
-    [_tweetRateTile setSubtitleRight:[NSString stringWithFormat:@"%@/hr", [NSNumberFormatter localizedStringFromNumber:@((int)tweetsPerSecond*60*60) numberStyle:NSNumberFormatterDecimalStyle]]];
-    [_tweetRateTile setNeedsDisplay];
+    [self.tweetRateTile setSubtitleLeft:[NSString stringWithFormat:@"%@/sec", [NSNumberFormatter localizedStringFromNumber:@((int)tweetsPerSecond) numberStyle:NSNumberFormatterDecimalStyle]]];
+    [self.tweetRateTile setSubtitleCenter:[NSString stringWithFormat:@"%@/min", [NSNumberFormatter localizedStringFromNumber:@((int)tweetsPerSecond*60) numberStyle:NSNumberFormatterDecimalStyle]]];
+    [self.tweetRateTile setSubtitleRight:[NSString stringWithFormat:@"%@/hr", [NSNumberFormatter localizedStringFromNumber:@((int)tweetsPerSecond*60*60) numberStyle:NSNumberFormatterDecimalStyle]]];
+    [self.tweetRateTile setNeedsDisplay];
     
     // Emoji readouts (try/catch prevents BAD ACCESS in cases where not enough Emojis have been read to be ranked to 3)
     NSArray *sortedEmojis = [[twitterStreamProcessor emojiCounts] keysSortedByValueUsingComparator:countComparer];
-    [_emojiStatisticsTile setTitle:@"Emoji"];
-    [_emojiStatisticsTile setSubtitle:[NSString stringWithFormat:@"(%.1f%%)", (((float)[twitterStreamProcessor emojiTweets] / (float)[twitterStreamProcessor tweets])*100)]];
+    [self.emojiStatisticsTile setTitle:@"Emoji"];
+    [self.emojiStatisticsTile setSubtitle:[NSString stringWithFormat:@"(%.1f%%)", (((float)[twitterStreamProcessor emojiTweets] / (float)[twitterStreamProcessor tweets])*100)]];
     @try {
-        [_emojiStatisticsTile setRank1Title:[NSString stringWithFormat:@" %@",[sortedEmojis objectAtIndex:0]]];
-        [_emojiStatisticsTile setRank1Subtitle:[NSString stringWithFormat:@"(%d)",[[[twitterStreamProcessor emojiCounts] objectForKey:[sortedEmojis objectAtIndex:0]] integerValue]]];
+        [self.emojiStatisticsTile setRank1Title:[NSString stringWithFormat:@" %@",[sortedEmojis objectAtIndex:0]]];
+        [self.emojiStatisticsTile setRank1Subtitle:[NSString stringWithFormat:@"(%ld)",[[[twitterStreamProcessor emojiCounts] objectForKey:[sortedEmojis objectAtIndex:0]] integerValue]]];
     } @catch(NSException *exception) {}
     @try {
-        [_emojiStatisticsTile setRank2Title:[NSString stringWithFormat:@" %@",[sortedEmojis objectAtIndex:1]]];
-        [_emojiStatisticsTile setRank2Subtitle:[NSString stringWithFormat:@"(%d)",[[[twitterStreamProcessor emojiCounts] objectForKey:[sortedEmojis objectAtIndex:1]] integerValue]]];
+        [self.emojiStatisticsTile setRank2Title:[NSString stringWithFormat:@" %@",[sortedEmojis objectAtIndex:1]]];
+        [self.emojiStatisticsTile setRank2Subtitle:[NSString stringWithFormat:@"(%ld)",[[[twitterStreamProcessor emojiCounts] objectForKey:[sortedEmojis objectAtIndex:1]] integerValue]]];
     } @catch(NSException *exception) {}
     @try {
-        [_emojiStatisticsTile setRank3Title:[NSString stringWithFormat:@" %@",[sortedEmojis objectAtIndex:2]]];
-        [_emojiStatisticsTile setRank3Subtitle:[NSString stringWithFormat:@"(%d)",[[[twitterStreamProcessor emojiCounts] objectForKey:[sortedEmojis objectAtIndex:2]] integerValue]]];
+        [self.emojiStatisticsTile setRank3Title:[NSString stringWithFormat:@" %@",[sortedEmojis objectAtIndex:2]]];
+        [self.emojiStatisticsTile setRank3Subtitle:[NSString stringWithFormat:@"(%ld)",[[[twitterStreamProcessor emojiCounts] objectForKey:[sortedEmojis objectAtIndex:2]] integerValue]]];
     } @catch(NSException *exception) {}
-    [_emojiStatisticsTile setNeedsDisplay];
+    [self.emojiStatisticsTile setNeedsDisplay];
     
     // Hashtag readouts (try/catch prevents BAD ACCESS in cases where not enough Hashtags have been read to be ranked to 3)
     NSArray *sortedHashtags = [[twitterStreamProcessor hashtagCounts] keysSortedByValueUsingComparator:countComparer];
-    [_hashtagStatisticsTile setTitle:@"Hashtags"];
-    [_hashtagStatisticsTile setSubtitle:[NSString stringWithFormat:@"(%.1f%%)", (((float)[twitterStreamProcessor hashtagTweets] / (float)[twitterStreamProcessor tweets])*100)]];
+    [self.hashtagStatisticsTile setTitle:@"Hashtags"];
+    [self.hashtagStatisticsTile setSubtitle:[NSString stringWithFormat:@"(%.1f%%)", (((float)[twitterStreamProcessor hashtagTweets] / (float)[twitterStreamProcessor tweets])*100)]];
     @try {
-        [_hashtagStatisticsTile setRank1Title:[NSString stringWithFormat:@" %@",[sortedHashtags objectAtIndex:0]]];
-        [_hashtagStatisticsTile setRank1Subtitle:[NSString stringWithFormat:@"(%d)",[[[twitterStreamProcessor hashtagCounts] objectForKey:[sortedHashtags objectAtIndex:0]] integerValue]]];
+        [self.hashtagStatisticsTile setRank1Title:[NSString stringWithFormat:@" %@",[sortedHashtags objectAtIndex:0]]];
+        [self.hashtagStatisticsTile setRank1Subtitle:[NSString stringWithFormat:@"(%ld)",[[[twitterStreamProcessor hashtagCounts] objectForKey:[sortedHashtags objectAtIndex:0]] integerValue]]];
     } @catch(NSException *exception) {}
     @try {
-        [_hashtagStatisticsTile setRank2Title:[NSString stringWithFormat:@" %@",[sortedHashtags objectAtIndex:1]]];
-        [_hashtagStatisticsTile setRank2Subtitle:[NSString stringWithFormat:@"(%d)",[[[twitterStreamProcessor hashtagCounts] objectForKey:[sortedHashtags objectAtIndex:1]] integerValue]]];
+        [self.hashtagStatisticsTile setRank2Title:[NSString stringWithFormat:@" %@",[sortedHashtags objectAtIndex:1]]];
+        [self.hashtagStatisticsTile setRank2Subtitle:[NSString stringWithFormat:@"(%ld)",[[[twitterStreamProcessor hashtagCounts] objectForKey:[sortedHashtags objectAtIndex:1]] integerValue]]];
     } @catch(NSException *exception) {}
     @try {
-        [_hashtagStatisticsTile setRank3Title:[NSString stringWithFormat:@" %@",[sortedHashtags objectAtIndex:2]]];
-        [_hashtagStatisticsTile setRank3Subtitle:[NSString stringWithFormat:@"(%d)",[[[twitterStreamProcessor hashtagCounts] objectForKey:[sortedHashtags objectAtIndex:2]] integerValue]]];
+        [self.hashtagStatisticsTile setRank3Title:[NSString stringWithFormat:@" %@",[sortedHashtags objectAtIndex:2]]];
+        [self.hashtagStatisticsTile setRank3Subtitle:[NSString stringWithFormat:@"(%ld)",[[[twitterStreamProcessor hashtagCounts] objectForKey:[sortedHashtags objectAtIndex:2]] integerValue]]];
     } @catch(NSException *exception) {}
-    [_hashtagStatisticsTile setNeedsDisplay];
+    [self.hashtagStatisticsTile setNeedsDisplay];
     
     // URL/Domain readouts (try/catch prevents BAD ACCESS in cases where not enough URLs have been read to be ranked to 3)
     NSArray *sortedUrlDomains = [[twitterStreamProcessor urlDomainCounts] keysSortedByValueUsingComparator:countComparer];
-    [_urlStatisticsTile setTitle:@"URLs"];
-    [_urlStatisticsTile setSubtitle:[NSString stringWithFormat:@"(%.1f%%)", (((float)[twitterStreamProcessor urlTweets] / (float)[twitterStreamProcessor tweets])*100)]];
+    [self.urlStatisticsTile setTitle:@"URLs"];
+    [self.urlStatisticsTile setSubtitle:[NSString stringWithFormat:@"(%.1f%%)", (((float)[twitterStreamProcessor urlTweets] / (float)[twitterStreamProcessor tweets])*100)]];
     @try {
-        [_urlStatisticsTile setRank1Title:[NSString stringWithFormat:@" %@",[sortedUrlDomains objectAtIndex:0]]];
-        [_urlStatisticsTile setRank1Subtitle:[NSString stringWithFormat:@"(%d)",[[[twitterStreamProcessor urlDomainCounts] objectForKey:[sortedUrlDomains objectAtIndex:0]] integerValue]]];
+        [self.urlStatisticsTile setRank1Title:[NSString stringWithFormat:@" %@",[sortedUrlDomains objectAtIndex:0]]];
+        [self.urlStatisticsTile setRank1Subtitle:[NSString stringWithFormat:@"(%ld)",[[[twitterStreamProcessor urlDomainCounts] objectForKey:[sortedUrlDomains objectAtIndex:0]] integerValue]]];
     } @catch(NSException *exception) {}
     @try {
-        [_urlStatisticsTile setRank2Title:[NSString stringWithFormat:@" %@",[sortedUrlDomains objectAtIndex:1]]];
-        [_urlStatisticsTile setRank2Subtitle:[NSString stringWithFormat:@"(%d)",[[[twitterStreamProcessor urlDomainCounts] objectForKey:[sortedUrlDomains objectAtIndex:1]] integerValue]]];
+        [self.urlStatisticsTile setRank2Title:[NSString stringWithFormat:@" %@",[sortedUrlDomains objectAtIndex:1]]];
+        [self.urlStatisticsTile setRank2Subtitle:[NSString stringWithFormat:@"(%ld)",[[[twitterStreamProcessor urlDomainCounts] objectForKey:[sortedUrlDomains objectAtIndex:1]] integerValue]]];
     } @catch(NSException *exception) {}
     @try {
-        [_urlStatisticsTile setRank3Title:[NSString stringWithFormat:@" %@",[sortedUrlDomains objectAtIndex:2]]];
-        [_urlStatisticsTile setRank3Subtitle:[NSString stringWithFormat:@"(%d)",[[[twitterStreamProcessor urlDomainCounts] objectForKey:[sortedUrlDomains objectAtIndex:2]] integerValue]]];
+        [self.urlStatisticsTile setRank3Title:[NSString stringWithFormat:@" %@",[sortedUrlDomains objectAtIndex:2]]];
+        [self.urlStatisticsTile setRank3Subtitle:[NSString stringWithFormat:@"(%ld)",[[[twitterStreamProcessor urlDomainCounts] objectForKey:[sortedUrlDomains objectAtIndex:2]] integerValue]]];
     } @catch(NSException *exception) {}
-    [_urlStatisticsTile setNeedsDisplay];
+    [self.urlStatisticsTile setNeedsDisplay];
     
     // Image readouts
-    [_imageStatisticsTile setTitle:@"Image/Photo"];
-    [_imageStatisticsTile setSubtitle:[NSString stringWithFormat:@"(%.1f%%)", (((float)[twitterStreamProcessor imageTweets] / (float)[twitterStreamProcessor tweets])*100)]];
-    [_imageStatisticsTile setNeedsDisplay];
+    [self.imageStatisticsTile setTitle:@"Image/Photo"];
+    [self.imageStatisticsTile setSubtitle:[NSString stringWithFormat:@"(%.1f%%)", (((float)[twitterStreamProcessor imageTweets] / (float)[twitterStreamProcessor tweets])*100)]];
+    [self.imageStatisticsTile setNeedsDisplay];
     
 }
 

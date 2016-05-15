@@ -13,41 +13,26 @@
 @protocol MRTwitterStreamProcessorDelegate <NSObject>
 
 @optional
-- (void)TwitterStreamProcessorUpdated:(MRTwitterStreamProcessor*) twitterStreamProcesssor;
+- (void)TwitterStreamProcessorUpdated:(MRTwitterStreamProcessor * _Nonnull) twitterStreamProcesssor;
 
 @end
 
-@interface MRTwitterStreamProcessor : NSObject {
-    
-    // Statistical Storage
-    int _tweets;
-    int _urlTweets;
-    int _imageTweets;
-    int _emojiTweets;
-    int _hashtagTweets;
-    NSMutableDictionary *_emojiCounts;
-    NSMutableDictionary *_hashtagCounts;
-    NSMutableDictionary *_urlDomainCounts;
-    
-    // Delegate to post updates to
-    id _delegate;
-    
-}
+@interface MRTwitterStreamProcessor : NSObject
 
-- (instancetype)init;
-- (void)processTweet:(NSDictionary*) tweet;
+- (instancetype _Nonnull)init;
+- (void)processTweet:(NSDictionary * _Nonnull) tweet;
 - (void)reset;
 
-@property (nonatomic, strong) dispatch_queue_t concurrentProcessQueue;
-@property (nonatomic) id<MRTwitterStreamProcessorDelegate> delegate;
+@property (nonatomic, strong, nonnull) dispatch_queue_t concurrentProcessQueue;
+@property (nonatomic, nonnull) id<MRTwitterStreamProcessorDelegate> delegate;
 
-@property (nonatomic, readonly) int tweets;
-@property (nonatomic, readonly) int urlTweets;
-@property (nonatomic, readonly) int imageTweets;
-@property (nonatomic, readonly) int emojiTweets;
-@property (nonatomic, readonly) int hashtagTweets;
-@property (nonatomic, readonly) NSDictionary *emojiCounts;
-@property (nonatomic, readonly) NSDictionary *hashtagCounts;
-@property (nonatomic, readonly) NSDictionary *urlDomainCounts;
+@property (nonatomic) int tweets;
+@property (nonatomic) int urlTweets;
+@property (nonatomic) int imageTweets;
+@property (nonatomic) int emojiTweets;
+@property (nonatomic) int hashtagTweets;
+@property (nonatomic, nonnull) NSMutableDictionary *emojiCounts;
+@property (nonatomic, nonnull) NSMutableDictionary *hashtagCounts;
+@property (nonatomic, nonnull) NSMutableDictionary *urlDomainCounts;
 
 @end

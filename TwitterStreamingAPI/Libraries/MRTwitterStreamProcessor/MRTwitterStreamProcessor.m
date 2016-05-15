@@ -10,30 +10,18 @@
 
 @implementation MRTwitterStreamProcessor
 
-@synthesize delegate = _delegate;
-
-@synthesize tweets = _tweets;
-@synthesize urlTweets = _urlTweets;
-@synthesize imageTweets = _imageTweets;
-@synthesize emojiTweets = _emojiTweets;
-@synthesize hashtagTweets = _hashtagTweets;
-@synthesize emojiCounts = _emojiCounts;
-@synthesize hashtagCounts = _hashtagCounts;
-@synthesize urlDomainCounts = _urlDomainCounts;
-
-
 - (instancetype)init
 {
     self = [super init];
     if (self) {
-        _tweets = 0;
-        _urlTweets = 0;
-        _emojiTweets = 0;
-        _imageTweets = 0;
-        _hashtagTweets = 0;
-        _emojiCounts = [[NSMutableDictionary alloc] init];
-        _hashtagCounts = [[NSMutableDictionary alloc] init];
-        _urlDomainCounts = [[NSMutableDictionary alloc] init];
+        self.tweets = 0;
+        self.urlTweets = 0;
+        self.emojiTweets = 0;
+        self.imageTweets = 0;
+        self.hashtagTweets = 0;
+        self.emojiCounts = [[NSMutableDictionary alloc] init];
+        self.hashtagCounts = [[NSMutableDictionary alloc] init];
+        self.urlDomainCounts = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -48,14 +36,14 @@
 - (void)process:(NSDictionary*) tweet {
     
     // Collect hash tags
-    NSMutableArray *hashtags = [NSMutableArray array];
+    NSMutableArray<NSString *> *hashtags = [NSMutableArray array];
     for( NSDictionary *hashtag in [[tweet objectForKey:@"entities"] objectForKey:@"hashtags"] ) {
         [hashtags addObject:[hashtag objectForKey:@"text"]];
     }
     
     // Collect urls
-    NSArray *urls = [[tweet objectForKey:@"entities"] objectForKey:@"urls"];
-    NSMutableArray *urlDomains = [NSMutableArray array];
+    NSArray<NSString *> *urls = [[tweet objectForKey:@"entities"] objectForKey:@"urls"];
+    NSMutableArray<NSString *> *urlDomains = [NSMutableArray array];
     
     // process urls using regex to find any possible image url (including popular image extensions)
     BOOL hasImage = FALSE;
@@ -83,7 +71,7 @@
     }
     
     // Collect Emojis using NSString+EmojiTools
-    NSArray *emojis = [[tweet objectForKey:@"text"] getEmojis];
+    NSArray<NSString *> *emojis = [[tweet objectForKey:@"text"] getEmojis];
     
     // Record changes on sync'ed main queue
     dispatch_sync(dispatch_get_main_queue(), ^{
@@ -93,72 +81,72 @@
 
 - (void)recordTweetStatsHashtags:(NSArray*) hashtags urlDomains:(NSArray*) urlDomains emojis:(NSArray*) emojis hasImage:(BOOL) hasImage {
     // By default, increase tweet count
-    _tweets += 1;
+    self.tweets += 1;
     
     // Increment images if tweet had image
-    _imageTweets = hasImage ? _imageTweets + 1 : _imageTweets;
+    self.imageTweets = hasImage ? self.imageTweets + 1 : self.imageTweets;
     
     // Increment urls if domains >0
-    _urlTweets = [urlDomains count] ? _urlTweets + 1 : _urlTweets;
+    self.urlTweets = [urlDomains count] ? self.urlTweets + 1 : self.urlTweets;
     
     // Increment emojis if emojis >0
-    _emojiTweets = [emojis count] ? _emojiTweets + 1 : _emojiTweets;
+    self.emojiTweets = [emojis count] ? self.emojiTweets + 1 : self.emojiTweets;
     
     // Increment hashtags if hashtags >0
-    _hashtagTweets = [hashtags count] ? _hashtagTweets + 1 : _hashtagTweets;
+    self.hashtagTweets = [hashtags count] ? self.hashtagTweets + 1 : self.hashtagTweets;
     
     // Add domains... If domain exists, increment the count, otherwise add domain with value 1
     for( NSString *domain in urlDomains ) {
-        if( [_urlDomainCounts objectForKey:domain] != nil ) {
-            [_urlDomainCounts setObject:[NSNumber numberWithInt:[[_urlDomainCounts objectForKey:domain] integerValue] + 1]
+        if( [self.urlDomainCounts objectForKey:domain] != nil ) {
+            [self.urlDomainCounts setObject:[NSNumber numberWithInt:(int)[[self.urlDomainCounts objectForKey:domain] integerValue] + 1]
                                forKey:domain];
         } else {
-            [_urlDomainCounts setObject:[NSNumber numberWithInt:1]
+            [self.urlDomainCounts setObject:[NSNumber numberWithInt:1]
                                forKey:domain];
         }
     }
     
     // Add hash tags... if tag exists, increment the count, otherwise add hashtag with value 1
     for( NSString *hashtag in hashtags ) {
-        if( [_hashtagCounts objectForKey:hashtag] != nil ) {
-            [_hashtagCounts setObject:[NSNumber numberWithInt:[[_hashtagCounts objectForKey:hashtag] integerValue] + 1]
+        if( [self.hashtagCounts objectForKey:hashtag] != nil ) {
+            [self.hashtagCounts setObject:[NSNumber numberWithInt:(int)[[self.hashtagCounts objectForKey:hashtag] integerValue] + 1]
                                forKey:hashtag];
         } else {
-            [_hashtagCounts setObject:[NSNumber numberWithInt:1]
+            [self.hashtagCounts setObject:[NSNumber numberWithInt:1]
                                forKey:hashtag];
         }
     }
     
     // Add emojis... if emoji exists, increment the count, otherwise add emoji with value 1
     for( NSString *emoji in emojis ) {
-        if( [_emojiCounts objectForKey:emoji] != nil ) {
-            [_emojiCounts setObject:[NSNumber numberWithInt:[[_emojiCounts objectForKey:emoji] integerValue] + 1]
+        if( [self.emojiCounts objectForKey:emoji] != nil ) {
+            [self.emojiCounts setObject:[NSNumber numberWithInt:(int)[[self.emojiCounts objectForKey:emoji] integerValue] + 1]
                                forKey:emoji];
         } else {
-            [_emojiCounts setObject:[NSNumber numberWithInt:1]
+            [self.emojiCounts setObject:[NSNumber numberWithInt:1]
                                forKey:emoji];
         }
     }
     
     // Let delegate know we've updated
-    if( [_delegate respondsToSelector:@selector(TwitterStreamProcessorUpdated:)] ) {
-        [_delegate TwitterStreamProcessorUpdated:self];
+    if( [self.delegate respondsToSelector:@selector(TwitterStreamProcessorUpdated:)] ) {
+        [self.delegate TwitterStreamProcessorUpdated:self];
     }
 }
 
 - (void)reset {
-    _tweets = 0;
-    _urlTweets = 0;
-    _emojiTweets = 0;
-    _imageTweets = 0;
-    _hashtagTweets = 0;
-    [_emojiCounts removeAllObjects];
-    [_hashtagCounts removeAllObjects];
-    [_urlDomainCounts removeAllObjects];
+    self.tweets = 0;
+    self.urlTweets = 0;
+    self.emojiTweets = 0;
+    self.imageTweets = 0;
+    self.hashtagTweets = 0;
+    [self.emojiCounts removeAllObjects];
+    [self.hashtagCounts removeAllObjects];
+    [self.urlDomainCounts removeAllObjects];
 }
 
 - (NSString*)domainFromUrl:(NSString*) url {
-    NSArray *parts = [url componentsSeparatedByString:@"/"];
+    NSArray<NSString *> *parts = [url componentsSeparatedByString:@"/"];
     for (NSString *part in parts) {
         if( [part rangeOfString:@"."].location != NSNotFound ) {
             // Remove the www. which is a common useless occurance

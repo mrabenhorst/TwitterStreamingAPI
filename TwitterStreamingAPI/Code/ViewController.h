@@ -20,26 +20,28 @@
 
 
 @interface ViewController : UIViewController <MRTwitterStreamProcessorDelegate> {
-    NSDate *_streamStart;
     
-    ACAccountStore *_accountStore;
-    ACAccount *_account;
-    
-    MRTwitterStreamProcessor *_tsp;
-    NSObject<STTwitterRequestProtocol> *_request;
-    STTwitterAPI *_twitterAPI;
-    
-    // UI Elements
-    MRTitleTileUIView *_titleTile;
-    MRTweetRateTileUIView *_tweetRateTile;
-    MRStatisticsTileUIView *_hashtagStatisticsTile;
-    MRStatisticsTileUIView *_emojiStatisticsTile;
-    MRStatisticsTileUIView *_urlStatisticsTile;
-    MRSimpleStatisticsTileUIView *_imageStatisticsTile;
-    MRButtonTileUIView *_buttonTile;
-    
-    UIScrollView *_scrollView;
 }
+
+@property (nonatomic, nonnull) NSDate *streamStart;
+
+@property (nonatomic, nonnull) ACAccountStore *accountStore;
+@property (nonatomic, nonnull) ACAccount *account;
+
+@property (nonatomic, nonnull) MRTwitterStreamProcessor *tsp;
+@property (nonatomic, nullable) NSObject<STTwitterRequestProtocol> *request;
+@property (nonatomic, nonnull) STTwitterAPI *twitterAPI;
+
+// UI Elements
+@property (nonatomic, nonnull) MRTitleTileUIView *titleTile;
+@property (nonatomic, nonnull) MRTweetRateTileUIView *tweetRateTile;
+@property (nonatomic, nonnull) MRStatisticsTileUIView *hashtagStatisticsTile;
+@property (nonatomic, nonnull) MRStatisticsTileUIView *emojiStatisticsTile;
+@property (nonatomic, nonnull) MRStatisticsTileUIView *urlStatisticsTile;
+@property (nonatomic, nonnull) MRSimpleStatisticsTileUIView *imageStatisticsTile;
+@property (nonatomic, nonnull) MRButtonTileUIView *buttonTile;
+
+@property (nonatomic, nonnull) UIScrollView *scrollView;
 
 @end
 
