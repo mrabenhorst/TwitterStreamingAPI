@@ -31,8 +31,8 @@
 @property (nonatomic) int imageTweets;
 @property (nonatomic) int emojiTweets;
 @property (nonatomic) int hashtagTweets;
-@property (nonatomic, nonnull) NSMutableDictionary *emojiCounts;
-@property (nonatomic, nonnull) NSMutableDictionary *hashtagCounts;
-@property (nonatomic, nonnull) NSMutableDictionary *urlDomainCounts;
+@property (nonatomic, nonnull) NSMutableDictionary<NSString *, NSNumber *> *emojiCounts;
+@property (nonatomic, nonnull) NSMutableDictionary<NSString *, NSNumber *> *hashtagCounts;
+@property (nonatomic, nonnull) NSMutableDictionary<NSString *, NSNumber *> *urlDomainCounts;
 
 @end

@@ -4,6 +4,6 @@
 
 - (BOOL)isIncludingEmoji;
 - (instancetype)stringByRemovingEmoji;
-- (NSArray*)getEmojis;
+- (NSArray<NSString *>*)getEmojis;
 
 @end

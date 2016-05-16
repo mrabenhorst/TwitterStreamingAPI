@@ -69,8 +69,8 @@ static NSCharacterSet* VariationSelectors = nil;
     return buffer;
 }
 
-- (NSArray*)getEmojis {
-    NSMutableArray *emojis = [NSMutableArray array];
+- (NSArray<NSString *>*)getEmojis {
+    NSMutableArray<NSString *> *emojis = [NSMutableArray array];
     [self enumerateSubstringsInRange:NSMakeRange(0, [self length])
                              options:NSStringEnumerationByComposedCharacterSequences
                           usingBlock: ^(NSString* substring, NSRange substringRange, NSRange enclosingRange, BOOL* stop) {

@@ -10,7 +10,7 @@
 
 @implementation MRTwitterStreamProcessor
 
-- (instancetype)init
+- (instancetype _Nonnull)init
 {
     self = [super init];
     if (self) {
@@ -26,14 +26,14 @@
     return self;
 }
 
-- (void)processTweet:(NSDictionary*) tweet {
+- (void)processTweet:(NSDictionary<NSString *, NSDictionary *>*) tweet {
     // Dispatch concurrent to optimize speed under heavy traffic input
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [self process:tweet];
     });
 }
 
-- (void)process:(NSDictionary*) tweet {
+- (void)process:(NSDictionary<NSString *, NSDictionary *>*) tweet {
     
     // Collect hash tags
     NSMutableArray<NSString *> *hashtags = [NSMutableArray array];
@@ -47,7 +47,7 @@
     
     // process urls using regex to find any possible image url (including popular image extensions)
     BOOL hasImage = FALSE;
-    for( NSDictionary *url in urls ) {
+    for( NSDictionary<NSString *, NSString *> *url in urls ) {
         
         // Test for image if image hasn't been found - otherwise it's wasted computation
         if( !hasImage ) {
@@ -60,18 +60,15 @@
             }
         }
         
-        // Extract domain, using try-catch because sometimes url can be malformed and this will prevent an exception from terminating process
-        @try {
-            [urlDomains addObject:[self domainFromUrl:[url objectForKey:@"expanded_url"]]];
+        // Extract domain
+        NSString *domain = [self domainFromUrl:[url objectForKey:@"expanded_url"]];
+        if( domain != nil ) {
+            [urlDomains addObject:domain];
         }
-        @catch (NSException *exception) {
-            // Eat it
-        }
-        
     }
     
     // Collect Emojis using NSString+EmojiTools
-    NSArray<NSString *> *emojis = [[tweet objectForKey:@"text"] getEmojis];
+    NSArray<NSString *> *emojis = [(NSString*)[tweet objectForKey:@"text"] getEmojis];
     
     // Record changes on sync'ed main queue
     dispatch_sync(dispatch_get_main_queue(), ^{
@@ -79,7 +76,7 @@
     });
 }
 
-- (void)recordTweetStatsHashtags:(NSArray*) hashtags urlDomains:(NSArray*) urlDomains emojis:(NSArray*) emojis hasImage:(BOOL) hasImage {
+- (void)recordTweetStatsHashtags:(NSArray<NSString *>*) hashtags urlDomains:(NSArray<NSString *>*) urlDomains emojis:(NSArray<NSString *>*) emojis hasImage:(BOOL) hasImage {
     // By default, increase tweet count
     self.tweets += 1;
     
@@ -145,7 +142,7 @@
     [self.urlDomainCounts removeAllObjects];
 }
 
-- (NSString*)domainFromUrl:(NSString*) url {
+- (NSString* _Nullable)domainFromUrl:(NSString*) url {
     NSArray<NSString *> *parts = [url componentsSeparatedByString:@"/"];
     for (NSString *part in parts) {
         if( [part rangeOfString:@"."].location != NSNotFound ) {
@@ -155,20 +152,5 @@
     }
     return nil;
 }
-
-
-- (NSArray*)urlDomains {
-    return [_urlDomainCounts allKeys];
-}
-
-- (NSArray*)hashtags {
-    return [_hashtagCounts allKeys];
-}
-
-- (NSArray*)emojis {
-    return [_emojiCounts allKeys];
-}
-
-
 
 @end
