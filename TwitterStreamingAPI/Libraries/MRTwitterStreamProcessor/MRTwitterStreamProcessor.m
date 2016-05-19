@@ -10,7 +10,7 @@
 
 @implementation MRTwitterStreamProcessor
 
-- (instancetype _Nonnull)init
+- (nonnull instancetype)init
 {
     self = [super init];
     if (self) {
@@ -26,14 +26,14 @@
     return self;
 }
 
-- (void)processTweet:(NSDictionary<NSString *, NSDictionary *>*) tweet {
+- (void)processTweet:(nonnull NSDictionary<NSString *, NSDictionary *>*) tweet {
     // Dispatch concurrent to optimize speed under heavy traffic input
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^{
         [self process:tweet];
     });
 }
 
-- (void)process:(NSDictionary<NSString *, NSDictionary *>*) tweet {
+- (void)process:(nonnull NSDictionary<NSString *, NSDictionary *>*) tweet {
     
     // Collect hash tags
     NSMutableArray<NSString *> *hashtags = [NSMutableArray array];
@@ -76,7 +76,7 @@
     });
 }
 
-- (void)recordTweetStatsHashtags:(NSArray<NSString *>*) hashtags urlDomains:(NSArray<NSString *>*) urlDomains emojis:(NSArray<NSString *>*) emojis hasImage:(BOOL) hasImage {
+- (void)recordTweetStatsHashtags:(nonnull NSArray<NSString *>*) hashtags urlDomains:(nonnull NSArray<NSString *>*) urlDomains emojis:(nonnull NSArray<NSString *>*) emojis hasImage:(BOOL) hasImage {
     // By default, increase tweet count
     self.tweets += 1;
     
@@ -142,7 +142,7 @@
     [self.urlDomainCounts removeAllObjects];
 }
 
-- (NSString* _Nullable)domainFromUrl:(NSString*) url {
+- (nullable NSString*)domainFromUrl:(nonnull NSString*) url {
     NSArray<NSString *> *parts = [url componentsSeparatedByString:@"/"];
     for (NSString *part in parts) {
         if( [part rangeOfString:@"."].location != NSNotFound ) {

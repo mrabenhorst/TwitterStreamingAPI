@@ -92,7 +92,7 @@
     [self.startButtonTitle setText:@"Start Monitoring"];
 }
 
-- (void)toggleStream:(UIGestureRecognizer *)gestureRecognizer {
+- (void)toggleStream:(nonnull UIGestureRecognizer *)gestureRecognizer {
     if( !self.request ) {
         // Validate credentials on every attempt in case user no longer authenticated to use resource
         [self.twitterAPI verifyCredentialsWithUserSuccessBlock:^(NSString *username, NSString *userID) {
@@ -143,12 +143,12 @@
 }
 
 
-- (void)TwitterStreamProcessorUpdated:(MRTwitterStreamProcessor* _Nonnull) twitterStreamProcesssor {
+- (void)TwitterStreamProcessorUpdated:(nonnull MRTwitterStreamProcessor*) twitterStreamProcesssor {
     // Location for possible throttle if hooked into Firehose
     [self computeStatistics:twitterStreamProcesssor];
 }
 
-- (void)computeStatistics:(MRTwitterStreamProcessor* _Nonnull) twitterStreamProcessor {
+- (void)computeStatistics:(nonnull MRTwitterStreamProcessor*) twitterStreamProcessor {
     
     // Comparer block for sorting counts
     NSComparisonResult (^countComparer)( NSNumber* _Nonnull, NSNumber* _Nonnull ) = ^NSComparisonResult( NSNumber *num1, NSNumber *num2 ) {

@@ -13,14 +13,14 @@
 @protocol MRTwitterStreamProcessorDelegate <NSObject>
 
 @optional
-- (void)TwitterStreamProcessorUpdated:(MRTwitterStreamProcessor * _Nonnull) twitterStreamProcesssor;
+- (void)TwitterStreamProcessorUpdated:(nonnull MRTwitterStreamProcessor *) twitterStreamProcesssor;
 
 @end
 
 @interface MRTwitterStreamProcessor : NSObject
 
-- (instancetype _Nonnull)init;
-- (void)processTweet:(NSDictionary * _Nonnull) tweet;
+- (nonnull instancetype)init;
+- (void)processTweet:(nonnull NSDictionary *) tweet;
 - (void)reset;
 
 @property (nonatomic, strong, nonnull) dispatch_queue_t concurrentProcessQueue;

@@ -10,11 +10,11 @@
 
 @implementation CALayer (IBConfiguration)
 
--(void)setShadowUIColor:(UIColor*)color {
+-(void)setShadowUIColor:(nullable UIColor*)color {
     self.shadowColor = color.CGColor;
 }
 
--(UIColor*)shadowUIColor {
+-(nullable UIColor*)shadowUIColor {
     return [UIColor colorWithCGColor:self.shadowColor];
 }
 

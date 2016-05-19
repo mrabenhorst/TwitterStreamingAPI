@@ -11,6 +11,6 @@
 
 @interface CALayer (IBConfiguration)
 
-@property(nonatomic, assign) UIColor* shadowUIColor;
+@property(nonatomic, assign, nullable) UIColor* shadowUIColor;
 
 @end
