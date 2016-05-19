@@ -132,6 +132,7 @@
 		666A1E921CD81FB7006F7005 = {
 			isa = PBXGroup;
 			children = (
+				667EDD481CEDE147009ABE0E /* Categories */,
 				66E0AF0A1CDBFDF800BFAB06 /* Libraries */,
 				66E0AEF21CDBFDF800BFAB06 /* TwitterStreamingAPI */,
 				666A1E9C1CD81FB7006F7005 /* Products */,
@@ -154,6 +155,16 @@
 				667EDD461CEDE0C7009ABE0E /* CALayer+RuntimeAttributes.m */,
 			);
 			name = "CALayer+RuntimeAttributes";
+			path = TwitterStreamingAPI/Libraries;
+			sourceTree = "<group>";
+		};
+		667EDD481CEDE147009ABE0E /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				667EDD441CEDE098009ABE0E /* CALayer+RuntimeAttributes */,
+				66E0AF0E1CDBFDF800BFAB06 /* NSString+EmojiTools */,
+			);
+			name = Categories;
 			sourceTree = "<group>";
 		};
 		66E0AEF21CDBFDF800BFAB06 /* TwitterStreamingAPI */ = {
@@ -192,9 +203,7 @@
 		66E0AF0A1CDBFDF800BFAB06 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				667EDD441CEDE098009ABE0E /* CALayer+RuntimeAttributes */,
 				66E0AF0B1CDBFDF800BFAB06 /* MRTwitterStreamProcessor */,
-				66E0AF0E1CDBFDF800BFAB06 /* NSString+EmojiTools */,
 				66E0AF111CDBFDF800BFAB06 /* STTwitter */,
 			);
 			name = Libraries;
@@ -216,7 +225,8 @@
 				66E0AF0F1CDBFDF800BFAB06 /* NSString+EmojiTools.h */,
 				66E0AF101CDBFDF800BFAB06 /* NSString+EmojiTools.m */,
 			);
-			path = "NSString+EmojiTools";
+			name = "NSString+EmojiTools";
+			path = "TwitterStreamingAPI/Libraries/NSString+EmojiTools";
 			sourceTree = "<group>";
 		};
 		66E0AF111CDBFDF800BFAB06 /* STTwitter */ = {
