@@ -12,13 +12,6 @@
 #import "MRTwitterStreamProcessor.h"
 #import "STTwitter.h"
 
-#import "MRTitleTileUIView.h"
-#import "MRButtonTileUIView.h"
-#import "MRTweetRateTileUIView.h"
-#import "MRStatisticsTileUIView.h"
-#import "MRSimpleStatisticsTileUIView.h"
-
-
 @interface ViewController : UIViewController <MRTwitterStreamProcessorDelegate> {
     
 }
@@ -32,16 +25,53 @@
 @property (nonatomic, nullable) NSObject<STTwitterRequestProtocol> *request;
 @property (nonatomic, nonnull) STTwitterAPI *twitterAPI;
 
-// UI Elements
-@property (nonatomic, nonnull) MRTitleTileUIView *titleTile;
-@property (nonatomic, nonnull) MRTweetRateTileUIView *tweetRateTile;
-@property (nonatomic, nonnull) MRStatisticsTileUIView *hashtagStatisticsTile;
-@property (nonatomic, nonnull) MRStatisticsTileUIView *emojiStatisticsTile;
-@property (nonatomic, nonnull) MRStatisticsTileUIView *urlStatisticsTile;
-@property (nonatomic, nonnull) MRSimpleStatisticsTileUIView *imageStatisticsTile;
-@property (nonatomic, nonnull) MRButtonTileUIView *buttonTile;
 
-@property (nonatomic, nonnull) UIScrollView *scrollView;
+// ***********
+// UI Elements
+// ***********
+// Tweets
+@property (weak, nonatomic) IBOutlet UILabel *tweetCount;
+@property (weak, nonatomic) IBOutlet UILabel *tweetRateSec;
+@property (weak, nonatomic) IBOutlet UILabel *tweetRateMin;
+@property (weak, nonatomic) IBOutlet UILabel *tweetRateHr;
+
+// Hashtags
+@property (weak, nonatomic) IBOutlet UILabel *hashtagsTitle;
+@property (weak, nonatomic) IBOutlet UILabel *hashtagsSubtitle;
+@property (weak, nonatomic) IBOutlet UILabel *hashtagRank1Title;
+@property (weak, nonatomic) IBOutlet UILabel *hashtagRank1Subtitle;
+@property (weak, nonatomic) IBOutlet UILabel *hashtagRank2Title;
+@property (weak, nonatomic) IBOutlet UILabel *hashtagRank2Subtitle;
+@property (weak, nonatomic) IBOutlet UILabel *hashtagRank3Title;
+@property (weak, nonatomic) IBOutlet UILabel *hashtagRank3Subtitle;
+
+// Emoji
+@property (weak, nonatomic) IBOutlet UILabel *emojiTitle;
+@property (weak, nonatomic) IBOutlet UILabel *emojiSubtitle;
+@property (weak, nonatomic) IBOutlet UILabel *emojiRank1Title;
+@property (weak, nonatomic) IBOutlet UILabel *emojiRank1Subtitle;
+@property (weak, nonatomic) IBOutlet UILabel *emojiRank2Title;
+@property (weak, nonatomic) IBOutlet UILabel *emojiRank2Subtitle;
+@property (weak, nonatomic) IBOutlet UILabel *emojiRank3Title;
+@property (weak, nonatomic) IBOutlet UILabel *emojiRank3Subtitle;
+
+// URLs
+@property (weak, nonatomic) IBOutlet UILabel *urlsTitle;
+@property (weak, nonatomic) IBOutlet UILabel *urlsSubtitle;
+@property (weak, nonatomic) IBOutlet UILabel *urlsRank1Title;
+@property (weak, nonatomic) IBOutlet UILabel *urlsRank1Subtitle;
+@property (weak, nonatomic) IBOutlet UILabel *urlsRank2Title;
+@property (weak, nonatomic) IBOutlet UILabel *urlsRank2Subtitle;
+@property (weak, nonatomic) IBOutlet UILabel *urlsRank3Title;
+@property (weak, nonatomic) IBOutlet UILabel *urlsRank3Subtitle;
+
+// Images
+@property (weak, nonatomic) IBOutlet UILabel *imagesTitle;
+@property (weak, nonatomic) IBOutlet UILabel *imagesSubtitle;
+
+// Button
+@property (weak, nonatomic) IBOutlet UIView *startButton;
+@property (weak, nonatomic) IBOutlet UILabel *startButtonTitle;
 
 @end
 
