@@ -39,10 +39,10 @@
     // You will need to enter your own credentials before this will work!
     //
     // **********************************************************************
-    self.twitterAPI = [STTwitterAPI twitterAPIWithOAuthConsumerKey:@"UThRWKR8kkRw6xbaWrib6pqpR"
-                                                    consumerSecret:@"8L8sJVJCxHbDJ6h9tbTC4GykoqjEUOq0HpI1ulHnKTj5SwTwhU"
-                                                        oauthToken:@"499871143-4d4vWyO39dVZVu3lM7b0sX4L8uFjJxF0Uxr7EMqm"
-                                                  oauthTokenSecret:@"pTBwLt28pHAhkC7KL502NmDMNELykKhG0tUUBkoDRLKvj"];
+    self.twitterAPI = [STTwitterAPI twitterAPIWithOAuthConsumerKey:@""
+                                                    consumerSecret:@""
+                                                        oauthToken:@""
+                                                  oauthTokenSecret:@""];
     
 }
 
@@ -176,52 +176,52 @@
     // Hashtag readouts ('if' prevents BAD ACCESS in cases where not enough Hashtags have been read to be ranked to 3)
     NSArray<NSString *> *sortedHashtags = [[twitterStreamProcessor hashtagCounts] keysSortedByValueUsingComparator:countComparer];
     [self.hashtagsSubtitle setText:[NSString stringWithFormat:@"(%.1f%%)", (((float)[twitterStreamProcessor hashtagTweets] / (float)[twitterStreamProcessor tweets])*100)]];
-    int numHashtags = [sortedHashtags count];
+    int numHashtags = (int)[sortedHashtags count];
     if( numHashtags > 0 ) {
         [self.hashtagRank1Title setText:[NSString stringWithFormat:@" %@",[sortedHashtags objectAtIndex:0]]];
-        [self.hashtagRank1Subtitle setText:[NSString stringWithFormat:@"(%d)",[[[twitterStreamProcessor hashtagCounts] objectForKey:[sortedHashtags objectAtIndex:0]] integerValue]]];
+        [self.hashtagRank1Subtitle setText:[NSString stringWithFormat:@"(%ld)",[[[twitterStreamProcessor hashtagCounts] objectForKey:[sortedHashtags objectAtIndex:0]] integerValue]]];
     }
     if( numHashtags > 1 ) {
         [self.hashtagRank2Title setText:[NSString stringWithFormat:@" %@",[sortedHashtags objectAtIndex:1]]];
-        [self.hashtagRank2Subtitle setText:[NSString stringWithFormat:@"(%d)",[[[twitterStreamProcessor hashtagCounts] objectForKey:[sortedHashtags objectAtIndex:1]] integerValue]]];
+        [self.hashtagRank2Subtitle setText:[NSString stringWithFormat:@"(%ld)",[[[twitterStreamProcessor hashtagCounts] objectForKey:[sortedHashtags objectAtIndex:1]] integerValue]]];
     }
     if( numHashtags > 2 ) {
         [self.hashtagRank3Title setText:[NSString stringWithFormat:@" %@",[sortedHashtags objectAtIndex:2]]];
-        [self.hashtagRank3Subtitle setText:[NSString stringWithFormat:@"(%d)",[[[twitterStreamProcessor hashtagCounts] objectForKey:[sortedHashtags objectAtIndex:2]] integerValue]]];
+        [self.hashtagRank3Subtitle setText:[NSString stringWithFormat:@"(%ld)",[[[twitterStreamProcessor hashtagCounts] objectForKey:[sortedHashtags objectAtIndex:2]] integerValue]]];
     }
     
     // Emoji readouts ('if' prevents BAD ACCESS in cases where not enough Emojis have been read to be ranked to 3)
     NSArray<NSString *> *sortedEmojis = [[twitterStreamProcessor emojiCounts] keysSortedByValueUsingComparator:countComparer];
     [self.emojiSubtitle setText:[NSString stringWithFormat:@"(%.1f%%)", (((float)[twitterStreamProcessor emojiTweets] / (float)[twitterStreamProcessor tweets])*100)]];
-    int numEmojis = [sortedEmojis count];
+    int numEmojis = (int)[sortedEmojis count];
     if( numEmojis > 0 ) {
         [self.emojiRank1Title setText:[NSString stringWithFormat:@" %@",[sortedEmojis objectAtIndex:0]]];
-        [self.emojiRank1Subtitle setText:[NSString stringWithFormat:@"(%d)",[[[twitterStreamProcessor emojiCounts] objectForKey:[sortedEmojis objectAtIndex:0]] integerValue]]];
+        [self.emojiRank1Subtitle setText:[NSString stringWithFormat:@"(%ld)",[[[twitterStreamProcessor emojiCounts] objectForKey:[sortedEmojis objectAtIndex:0]] integerValue]]];
     }
     if( numEmojis > 1 ) {
         [self.emojiRank2Title setText:[NSString stringWithFormat:@" %@",[sortedEmojis objectAtIndex:1]]];
-        [self.emojiRank2Subtitle setText:[NSString stringWithFormat:@"(%d)",[[[twitterStreamProcessor emojiCounts] objectForKey:[sortedEmojis objectAtIndex:1]] integerValue]]];
+        [self.emojiRank2Subtitle setText:[NSString stringWithFormat:@"(%ld)",[[[twitterStreamProcessor emojiCounts] objectForKey:[sortedEmojis objectAtIndex:1]] integerValue]]];
     }
     if( numEmojis > 2 ) {
         [self.emojiRank3Title setText:[NSString stringWithFormat:@" %@",[sortedEmojis objectAtIndex:2]]];
-        [self.emojiRank3Subtitle setText:[NSString stringWithFormat:@"(%d)",[[[twitterStreamProcessor emojiCounts] objectForKey:[sortedEmojis objectAtIndex:2]] integerValue]]];
+        [self.emojiRank3Subtitle setText:[NSString stringWithFormat:@"(%ld)",[[[twitterStreamProcessor emojiCounts] objectForKey:[sortedEmojis objectAtIndex:2]] integerValue]]];
     }
     
     // URL/Domain readouts ('if' prevents BAD ACCESS in cases where not enough URLs have been read to be ranked to 3)
     NSArray *sortedUrlDomains = [[twitterStreamProcessor urlDomainCounts] keysSortedByValueUsingComparator:countComparer];
     [self.urlsSubtitle setText:[NSString stringWithFormat:@"(%.1f%%)", (((float)[twitterStreamProcessor urlTweets] / (float)[twitterStreamProcessor tweets])*100)]];
-    int numDomains = [sortedUrlDomains count];
+    int numDomains = (int)[sortedUrlDomains count];
     if( numDomains > 0 ) {
         [self.urlsRank1Title setText:[NSString stringWithFormat:@" %@",[sortedUrlDomains objectAtIndex:0]]];
-        [self.urlsRank1Subtitle setText:[NSString stringWithFormat:@"(%d)",[[[twitterStreamProcessor urlDomainCounts] objectForKey:[sortedUrlDomains objectAtIndex:0]] integerValue]]];
+        [self.urlsRank1Subtitle setText:[NSString stringWithFormat:@"(%ld)",[[[twitterStreamProcessor urlDomainCounts] objectForKey:[sortedUrlDomains objectAtIndex:0]] integerValue]]];
     }
     if( numDomains > 1 ) {
         [self.urlsRank2Title setText:[NSString stringWithFormat:@" %@",[sortedUrlDomains objectAtIndex:1]]];
-        [self.urlsRank2Subtitle setText:[NSString stringWithFormat:@"(%d)",[[[twitterStreamProcessor urlDomainCounts] objectForKey:[sortedUrlDomains objectAtIndex:1]] integerValue]]];
+        [self.urlsRank2Subtitle setText:[NSString stringWithFormat:@"(%ld)",[[[twitterStreamProcessor urlDomainCounts] objectForKey:[sortedUrlDomains objectAtIndex:1]] integerValue]]];
     }
     if( numDomains > 2 ) {
         [self.urlsRank3Title setText:[NSString stringWithFormat:@" %@",[sortedUrlDomains objectAtIndex:2]]];
-        [self.urlsRank3Subtitle setText:[NSString stringWithFormat:@"(%d)",[[[twitterStreamProcessor urlDomainCounts] objectForKey:[sortedUrlDomains objectAtIndex:2]] integerValue]]];
+        [self.urlsRank3Subtitle setText:[NSString stringWithFormat:@"(%ld)",[[[twitterStreamProcessor urlDomainCounts] objectForKey:[sortedUrlDomains objectAtIndex:2]] integerValue]]];
     }
     
     // Image readouts
