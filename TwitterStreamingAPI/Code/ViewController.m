@@ -208,7 +208,7 @@
     }
     
     // URL/Domain readouts ('if' prevents BAD ACCESS in cases where not enough URLs have been read to be ranked to 3)
-    NSArray *sortedUrlDomains = [[twitterStreamProcessor urlDomainCounts] keysSortedByValueUsingComparator:countComparer];
+    NSArray<NSString *> *sortedUrlDomains = [[twitterStreamProcessor urlDomainCounts] keysSortedByValueUsingComparator:countComparer];
     [self.urlsSubtitle setText:[NSString stringWithFormat:@"(%.1f%%)", (((float)[twitterStreamProcessor urlTweets] / (float)[twitterStreamProcessor tweets])*100)]];
     int numDomains = (int)[sortedUrlDomains count];
     if( numDomains > 0 ) {
