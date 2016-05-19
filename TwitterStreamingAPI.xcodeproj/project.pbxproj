@@ -10,7 +10,7 @@
 		661205D81CD9714200C2A1E2 /* Twitter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 661205D71CD9714200C2A1E2 /* Twitter.framework */; };
 		666A1EC51CD86A15006F7005 /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 666A1EC41CD86A15006F7005 /* Social.framework */; };
 		666A1EC71CD86ABB006F7005 /* Accounts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 666A1EC61CD86ABB006F7005 /* Accounts.framework */; };
-		667EDD431CED518E009ABE0E /* CALayer+RuntimeAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 667EDD421CED518E009ABE0E /* CALayer+RuntimeAttributes.m */; };
+		667EDD471CEDE0C7009ABE0E /* CALayer+RuntimeAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 667EDD461CEDE0C7009ABE0E /* CALayer+RuntimeAttributes.m */; };
 		66E0AF331CDBFDF800BFAB06 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 66E0AEF31CDBFDF800BFAB06 /* Assets.xcassets */; };
 		66E0AF341CDBFDF800BFAB06 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66E0AEF41CDBFDF800BFAB06 /* LaunchScreen.storyboard */; };
 		66E0AF351CDBFDF800BFAB06 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 66E0AEF61CDBFDF800BFAB06 /* Main.storyboard */; };
@@ -55,8 +55,8 @@
 		666A1E9B1CD81FB7006F7005 /* TwitterStreamingAPI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TwitterStreamingAPI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		666A1EC41CD86A15006F7005 /* Social.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Social.framework; path = System/Library/Frameworks/Social.framework; sourceTree = SDKROOT; };
 		666A1EC61CD86ABB006F7005 /* Accounts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accounts.framework; path = System/Library/Frameworks/Accounts.framework; sourceTree = SDKROOT; };
-		667EDD411CED518E009ABE0E /* CALayer+RuntimeAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CALayer+RuntimeAttributes.h"; sourceTree = "<group>"; };
-		667EDD421CED518E009ABE0E /* CALayer+RuntimeAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CALayer+RuntimeAttributes.m"; sourceTree = "<group>"; };
+		667EDD451CEDE0C7009ABE0E /* CALayer+RuntimeAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "CALayer+RuntimeAttributes.h"; path = "CALayer+RuntimeAttributes/CALayer+RuntimeAttributes.h"; sourceTree = "<group>"; };
+		667EDD461CEDE0C7009ABE0E /* CALayer+RuntimeAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "CALayer+RuntimeAttributes.m"; path = "CALayer+RuntimeAttributes/CALayer+RuntimeAttributes.m"; sourceTree = "<group>"; };
 		66E0AEF31CDBFDF800BFAB06 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		66E0AEF51CDBFDF800BFAB06 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		66E0AEF71CDBFDF800BFAB06 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -147,6 +147,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		667EDD441CEDE098009ABE0E /* CALayer+RuntimeAttributes */ = {
+			isa = PBXGroup;
+			children = (
+				667EDD451CEDE0C7009ABE0E /* CALayer+RuntimeAttributes.h */,
+				667EDD461CEDE0C7009ABE0E /* CALayer+RuntimeAttributes.m */,
+			);
+			name = "CALayer+RuntimeAttributes";
+			sourceTree = "<group>";
+		};
 		66E0AEF21CDBFDF800BFAB06 /* TwitterStreamingAPI */ = {
 			isa = PBXGroup;
 			children = (
@@ -169,8 +178,6 @@
 				66E0AEFA1CDBFDF800BFAB06 /* AppDelegate.m */,
 				66E0AF061CDBFDF800BFAB06 /* ViewController.h */,
 				66E0AF071CDBFDF800BFAB06 /* ViewController.m */,
-				667EDD411CED518E009ABE0E /* CALayer+RuntimeAttributes.h */,
-				667EDD421CED518E009ABE0E /* CALayer+RuntimeAttributes.m */,
 			);
 			path = Code;
 			sourceTree = "<group>";
@@ -185,6 +192,7 @@
 		66E0AF0A1CDBFDF800BFAB06 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				667EDD441CEDE098009ABE0E /* CALayer+RuntimeAttributes */,
 				66E0AF0B1CDBFDF800BFAB06 /* MRTwitterStreamProcessor */,
 				66E0AF0E1CDBFDF800BFAB06 /* NSString+EmojiTools */,
 				66E0AF111CDBFDF800BFAB06 /* STTwitter */,
@@ -351,8 +359,8 @@
 				66E0AF491CDBFDF800BFAB06 /* STTwitterOSRequest.m in Sources */,
 				66E0AF411CDBFDF800BFAB06 /* NSError+STTwitter.m in Sources */,
 				66E0AF4A1CDBFDF800BFAB06 /* STTwitterStreamParser.m in Sources */,
-				667EDD431CED518E009ABE0E /* CALayer+RuntimeAttributes.m in Sources */,
 				66E0AF3E1CDBFDF800BFAB06 /* MRTwitterStreamProcessor.m in Sources */,
+				667EDD471CEDE0C7009ABE0E /* CALayer+RuntimeAttributes.m in Sources */,
 				66E0AF461CDBFDF800BFAB06 /* STTwitterHTML.m in Sources */,
 				66E0AF471CDBFDF800BFAB06 /* STTwitterOAuth.m in Sources */,
 				66E0AF3F1CDBFDF800BFAB06 /* NSString+EmojiTools.m in Sources */,
