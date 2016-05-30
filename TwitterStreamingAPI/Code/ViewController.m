@@ -229,6 +229,18 @@
     
 }
 
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    
+    // Forced override of size classes because of iOS bug with nested stacks:
+    // Width of device must be >=480 (iPhone 4S landscape width) to display panels as double column
+    if( size.width >= 480 ) {
+        [[self FirstStack] setAxis:UILayoutConstraintAxisHorizontal];
+        [[self SecondStack] setAxis:UILayoutConstraintAxisHorizontal];
+    } else {
+        [[self FirstStack] setAxis:UILayoutConstraintAxisVertical];
+        [[self SecondStack] setAxis:UILayoutConstraintAxisVertical];
+    }
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
