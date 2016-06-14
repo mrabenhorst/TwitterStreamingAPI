@@ -37,21 +37,21 @@
     
     // Collect hash tags
     NSMutableArray<NSString *> *hashtags = [NSMutableArray array];
-    for( NSDictionary *hashtag in [[tweet objectForKey:@"entities"] objectForKey:@"hashtags"] ) {
-        [hashtags addObject:[hashtag objectForKey:@"text"]];
+    for( NSDictionary *hashtag in (NSArray <NSDictionary *>*)tweet[@"entities"][@"hashtags"] ) {
+        [hashtags addObject:hashtag[@"text"]];
     }
     
     // Collect urls
-    NSArray<NSString *> *urls = [[tweet objectForKey:@"entities"] objectForKey:@"urls"];
+    NSArray<NSString *> *urls = (NSArray<NSString *>*)tweet[@"entities"][@"urls"];
     NSMutableArray<NSString *> *urlDomains = [NSMutableArray array];
     
     // process urls using regex to find any possible image url (including popular image extensions)
     BOOL hasImage = FALSE;
-    for( NSDictionary<NSString *, NSString *> *url in urls ) {
+    for( NSDictionary<NSString *, NSDictionary *> *url in urls ) {
         
         // Test for image if image hasn't been found - otherwise it's wasted computation
         if( !hasImage ) {
-            NSRange range = [[url objectForKey:@"expanded_url"] rangeOfString:@"instagram|pic[.]twitter[.]com|[.]jp[e]*g$|[.]gif$" options:NSRegularExpressionSearch];
+            NSRange range = [(NSString*)url[@"expanded_url"] rangeOfString:@"instagram|pic[.]twitter[.]com|[.]jp[e]*g$|[.]gif$" options:NSRegularExpressionSearch];
             BOOL matches = range.location != NSNotFound;
             
             // Early terminate if found
@@ -61,14 +61,14 @@
         }
         
         // Extract domain
-        NSString *domain = [self domainFromUrl:[url objectForKey:@"expanded_url"]];
+        NSString *domain = [self domainFromUrl:(NSString*)url[@"expanded_url"]];
         if( domain != nil ) {
             [urlDomains addObject:domain];
         }
     }
     
     // Collect Emojis using NSString+EmojiTools
-    NSArray<NSString *> *emojis = [(NSString*)[tweet objectForKey:@"text"] getEmojis];
+    NSArray<NSString *> *emojis = [(NSString*)tweet[@"text"] getEmojis];
     
     // Record changes on sync'ed main queue
     dispatch_sync(dispatch_get_main_queue(), ^{
@@ -94,34 +94,28 @@
     
     // Add domains... If domain exists, increment the count, otherwise add domain with value 1
     for( NSString *domain in urlDomains ) {
-        if( [self.urlDomainCounts objectForKey:domain] != nil ) {
-            [self.urlDomainCounts setObject:[NSNumber numberWithInt:(int)[[self.urlDomainCounts objectForKey:domain] integerValue] + 1]
-                               forKey:domain];
+        if( self.urlDomainCounts[domain] != nil ) {
+            self.urlDomainCounts[domain] = @([self.urlDomainCounts[domain] integerValue] + 1);
         } else {
-            [self.urlDomainCounts setObject:[NSNumber numberWithInt:1]
-                               forKey:domain];
+            self.urlDomainCounts[domain] = @1;
         }
     }
     
     // Add hash tags... if tag exists, increment the count, otherwise add hashtag with value 1
     for( NSString *hashtag in hashtags ) {
-        if( [self.hashtagCounts objectForKey:hashtag] != nil ) {
-            [self.hashtagCounts setObject:[NSNumber numberWithInt:(int)[[self.hashtagCounts objectForKey:hashtag] integerValue] + 1]
-                               forKey:hashtag];
+        if( self.hashtagCounts[hashtag] != nil ) {
+            self.hashtagCounts[hashtag] = @([self.hashtagCounts[hashtag] integerValue] + 1);
         } else {
-            [self.hashtagCounts setObject:[NSNumber numberWithInt:1]
-                               forKey:hashtag];
+            self.hashtagCounts[hashtag] = @1;
         }
     }
     
     // Add emojis... if emoji exists, increment the count, otherwise add emoji with value 1
     for( NSString *emoji in emojis ) {
-        if( [self.emojiCounts objectForKey:emoji] != nil ) {
-            [self.emojiCounts setObject:[NSNumber numberWithInt:(int)[[self.emojiCounts objectForKey:emoji] integerValue] + 1]
-                               forKey:emoji];
+        if( self.emojiCounts[emoji] != nil ) {
+            self.emojiCounts[emoji] = @([self.emojiCounts[emoji] integerValue] + 1);
         } else {
-            [self.emojiCounts setObject:[NSNumber numberWithInt:1]
-                               forKey:emoji];
+            self.emojiCounts[emoji] = @1;
         }
     }
     
